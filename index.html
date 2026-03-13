@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Youssef Elbedwehy — iOS Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #080c14;
+    --bg2: #0d1320;
+    --bg3: #111827;
+    --card: #131c2e;
+    --border: rgba(99,179,237,0.12);
+    --border2: rgba(99,179,237,0.25);
+    --blue: #3b82f6;
+    --blue2: #60a5fa;
+    --blue3: #93c5fd;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --dim: #475569;
+    --green: #34d399;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height:1.6; }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 1rem 2rem;
+    background: rgba(8,12,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--mono); font-size:14px; color: var(--blue2); letter-spacing:0.05em; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { font-size:13px; color: var(--muted); text-decoration:none; letter-spacing:0.05em; transition:color 0.2s; font-family: var(--mono); }
+  .nav-links a:hover { color: var(--blue2); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding: 6rem 2rem 4rem;
+    max-width: 900px; margin:0 auto;
+    position: relative;
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size:13px; color: var(--blue);
+    letter-spacing:0.1em; margin-bottom:1.5rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .hero-tag::before { content:''; width:32px; height:1px; background: var(--blue); }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight:800; line-height:1.1;
+    margin-bottom:1.5rem; letter-spacing:-0.02em;
+  }
+  .hero h1 span { color: var(--blue2); }
+  .hero-desc { font-size:1.1rem; color: var(--muted); max-width:560px; line-height:1.8; margin-bottom:2.5rem; font-family: var(--mono); font-weight:300; }
+  .hero-stats {
+    display:flex; gap:2.5rem; margin-bottom:3rem;
+    flex-wrap:wrap;
+  }
+  .stat { display:flex; flex-direction:column; }
+  .stat-num { font-size:1.8rem; font-weight:800; color: var(--blue2); font-family: var(--mono); }
+  .stat-label { font-size:12px; color: var(--muted); font-family: var(--mono); letter-spacing:0.05em; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary {
+    padding:0.75rem 1.75rem; background: var(--blue); color:#fff;
+    border:none; border-radius:6px; font-size:14px; cursor:pointer;
+    font-family: var(--mono); font-weight:500; text-decoration:none;
+    transition: background 0.2s, transform 0.15s;
+    display:inline-block;
+  }
+  .btn-primary:hover { background: var(--blue2); transform: translateY(-1px); }
+  .btn-outline {
+    padding:0.75rem 1.75rem; background: transparent; color: var(--blue2);
+    border:1px solid var(--border2); border-radius:6px; font-size:14px; cursor:pointer;
+    font-family: var(--mono); font-weight:500; text-decoration:none;
+    transition: border-color 0.2s, transform 0.15s;
+    display:inline-block;
+  }
+  .btn-outline:hover { border-color: var(--blue2); transform: translateY(-1px); }
+  .scroll-hint {
+    position:absolute; bottom:2rem; left:2rem;
+    font-family: var(--mono); font-size:12px; color: var(--dim);
+    display:flex; align-items:center; gap:8px;
+  }
+  .scroll-hint::after { content:''; width:1px; height:40px; background: var(--dim); }
+
+  /* GRID BG */
+  .grid-bg {
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width:900px; margin:0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size:12px; color: var(--blue);
+    letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.75rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-label::before { content:''; width:24px; height:1px; background: var(--blue); }
+  .section-title { font-size:2rem; font-weight:800; margin-bottom:3rem; letter-spacing:-0.02em; }
+
+  /* SKILLS */
+  .skills-grid { display:flex; flex-direction:column; gap:1.5rem; }
+  .skill-row { display:flex; gap:1rem; align-items:flex-start; flex-wrap:wrap; }
+  .skill-category {
+    font-family: var(--mono); font-size:12px; color: var(--blue);
+    letter-spacing:0.05em; min-width:180px; padding-top:6px;
+  }
+  .skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .tag {
+    padding:4px 12px; background: var(--card); border:1px solid var(--border);
+    border-radius:4px; font-family: var(--mono); font-size:12px; color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .tag:hover { border-color: var(--blue); color: var(--blue2); }
+
+  /* PROJECTS */
+  .projects-grid { display:flex; flex-direction:column; gap:2rem; }
+  .project-card {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .project-inner { padding:2rem; }
+  .project-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:1rem; }
+  .project-title { font-size:1.25rem; font-weight:700; }
+  .project-badges { display:flex; gap:8px; flex-wrap:wrap; }
+  .badge {
+    padding:3px 10px; border-radius:4px; font-family: var(--mono); font-size:11px;
+    font-weight:500;
+  }
+  .badge-green { background: rgba(52,211,153,0.1); color: var(--green); border:1px solid rgba(52,211,153,0.2); }
+  .badge-blue { background: rgba(59,130,246,0.1); color: var(--blue2); border:1px solid rgba(59,130,246,0.2); }
+  .badge-gray { background: var(--bg3); color: var(--muted); border:1px solid var(--border); }
+  .project-desc { color: var(--muted); font-size:14px; line-height:1.7; margin-bottom:1.5rem; font-family: var(--mono); font-weight:300; }
+  .project-stats { display:flex; gap:1.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+  .project-stat { display:flex; flex-direction:column; }
+  .project-stat-num { font-family: var(--mono); font-size:1.1rem; font-weight:700; color: var(--blue2); }
+  .project-stat-label { font-family: var(--mono); font-size:11px; color: var(--dim); }
+  .project-tech { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem; }
+  .tech-tag {
+    padding:2px 8px; background: rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.15);
+    border-radius:3px; font-family: var(--mono); font-size:11px; color: var(--blue3);
+  }
+  .project-links { display:flex; gap:1rem; }
+  .project-link {
+    font-family: var(--mono); font-size:12px; color: var(--blue2);
+    text-decoration:none; display:flex; align-items:center; gap:4px;
+    transition:color 0.2s;
+  }
+  .project-link:hover { color: #fff; }
+  .project-screenshots {
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap:8px;
+    padding:1rem 2rem 2rem;
+    background: var(--bg2);
+    border-top:1px solid var(--border);
+  }
+  .screenshot-placeholder {
+    aspect-ratio: 9/19.5;
+    background: var(--bg3);
+    border:1px solid var(--border);
+    border-radius:10px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:6px; overflow:hidden;
+  }
+  .screenshot-placeholder img {
+    width:100%; height:100%; object-fit:cover; border-radius:9px;
+  }
+  .screenshot-placeholder .ph {
+    font-family: var(--mono); font-size:10px; color: var(--dim); text-align:center; padding:0.5rem;
+  }
+  .ph-icon { font-size:20px; color: var(--dim); margin-bottom:4px; }
+
+  /* EXPERIENCE */
+  .exp-list { display:flex; flex-direction:column; gap:0; position:relative; }
+  .exp-list::before {
+    content:''; position:absolute; left:7px; top:8px; bottom:8px;
+    width:1px; background: var(--border);
+  }
+  .exp-item { display:flex; gap:1.5rem; padding:0 0 2.5rem 0; position:relative; }
+  .exp-dot {
+    width:15px; height:15px; border-radius:50%; border:2px solid var(--blue);
+    background: var(--bg); flex-shrink:0; margin-top:4px; z-index:1;
+  }
+  .exp-dot.active { background: var(--blue); }
+  .exp-content { flex:1; }
+  .exp-title { font-size:1rem; font-weight:700; margin-bottom:2px; }
+  .exp-company { font-family: var(--mono); font-size:13px; color: var(--blue2); margin-bottom:4px; }
+  .exp-date { font-family: var(--mono); font-size:11px; color: var(--dim); margin-bottom:0.75rem; }
+  .exp-desc { font-family: var(--mono); font-size:13px; color: var(--muted); line-height:1.7; font-weight:300; }
+  .exp-bullets { list-style:none; display:flex; flex-direction:column; gap:4px; }
+  .exp-bullets li { font-family: var(--mono); font-size:12px; color: var(--muted); padding-left:1rem; position:relative; font-weight:300; line-height:1.6; }
+  .exp-bullets li::before { content:'→'; position:absolute; left:0; color: var(--blue); font-size:10px; top:1px; }
+
+  /* CONTACT */
+  .contact-card {
+    background: var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:3rem;
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:1.5rem;
+  }
+  .contact-title { font-size:1.75rem; font-weight:800; }
+  .contact-desc { font-family: var(--mono); font-size:14px; color: var(--muted); max-width:480px; line-height:1.8; font-weight:300; }
+  .contact-links { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .contact-form { width:100%; max-width:520px; display:flex; flex-direction:column; gap:1rem; margin-top:1rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .form-group { display:flex; flex-direction:column; gap:6px; }
+  .form-group label { font-family: var(--mono); font-size:12px; color: var(--muted); letter-spacing:0.05em; }
+  .form-group input, .form-group textarea {
+    background: var(--bg3); border:1px solid var(--border); border-radius:6px;
+    padding:0.75rem 1rem; color: var(--text); font-family: var(--mono); font-size:13px;
+    outline:none; transition: border-color 0.2s; resize:vertical;
+    font-weight:300;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--blue2); }
+  .form-group textarea { min-height:120px; }
+
+  /* FOOTER */
+  footer {
+    border-top:1px solid var(--border); padding:2rem;
+    text-align:center; font-family: var(--mono); font-size:12px; color: var(--dim);
+  }
+
+  /* DIVIDER */
+  .divider { width:100%; height:1px; background: var(--border); max-width:900px; margin:0 auto; }
+
+  @media(max-width:600px) {
+    nav { padding:1rem; }
+    .nav-links { gap:1rem; }
+    .form-row { grid-template-columns:1fr; }
+    .skill-row { flex-direction:column; }
+    .skill-category { min-width:unset; }
+    .project-screenshots { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Animate on load */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .hero > * { animation: fadeUp 0.6s ease both; }
+  .hero > *:nth-child(1) { animation-delay:0.1s; }
+  .hero > *:nth-child(2) { animation-delay:0.2s; }
+  .hero > *:nth-child(3) { animation-delay:0.3s; }
+  .hero > *:nth-child(4) { animation-delay:0.4s; }
+  .hero > *:nth-child(5) { animation-delay:0.5s; }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">youssef.elbedwehy</div>
+  <ul class="nav-links">
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">iOS Developer · Cairo, Egypt</div>
+  <h1>Building <span>apps</span> people<br/>actually use.</h1>
+  <p class="hero-desc">
+    Swift · SwiftUI · Clean Architecture<br/>
+    Shipping production iOS apps at METI and as a freelancer.<br/>
+    Apple Certified Developer.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">2,800+</span>
+      <span class="stat-label">App Store downloads</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">11,500+</span>
+      <span class="stat-label">Impressions</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5+</span>
+      <span class="stat-label">Apps delivered</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1yr+</span>
+      <span class="stat-label">Professional experience</span>
+    </div>
+  </div>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">expertise</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-row">
+      <span class="skill-category">// languages</span>
+      <div class="skill-tags">
+        <span class="tag">Swift</span>
+        <span class="tag">SwiftUI</span>
+        <span class="tag">UIKit</span>
+        <span class="tag">Objective-C</span>
+        <span class="tag">Async/Await</span>
+        <span class="tag">Combine</span>
+        <span class="tag">RxSwift</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <span class="skill-category">// architecture</span>
+      <div class="skill-tags">
+        <span class="tag">Clean Architecture</span>
+        <span class="tag">MVVM</span>
+        <span class="tag">MVVM-C</span>
+        <span class="tag">MVP</span>
+        <span class="tag">SOLID</span>
+        <span class="tag">Dependency Injection</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <span class="skill-category">// networking</span>
+      <div class="skill-tags">
+        <span class="tag">RESTful APIs</span>
+        <span class="tag">GraphQL</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">Alamofire</span>
+        <span class="tag">Moya</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <span class="skill-category">// data & mapping</span>
+      <div class="skill-tags">
+        <span class="tag">Core Data</span>
+        <span class="tag">SwiftData</span>
+        <span class="tag">MapKit</span>
+        <span class="tag">CoreLocation</span>
+      </div>
+    </div>
+    <div class="skill-row">
+      <span class="skill-category">// tools & devops</span>
+      <div class="skill-tags">
+        <span class="tag">Xcode</span>
+        <span class="tag">Git/GitHub</span>
+        <span class="tag">Fastlane</span>
+        <span class="tag">TestFlight</span>
+        <span class="tag">SPM</span>
+        <span class="tag">Tuist</span>
+        <span class="tag">XCTest</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">work</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+
+    <!-- Aghrad Elkashta -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">Aghrad Elkashta — اغراض الكشتة</div>
+          <div class="project-badges">
+            <span class="badge badge-green">App Store Live</span>
+            <span class="badge badge-blue">Published</span>
+          </div>
+        </div>
+        <p class="project-desc">Offline-first shopping and goods app. Built entirely with SwiftUI and Clean Architecture (MVVM-C). All data persisted locally with Core Data — no internet required after install.</p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <span class="project-stat-num">2,800+</span>
+            <span class="project-stat-label">downloads</span>
+          </div>
+          <div class="project-stat">
+            <span class="project-stat-num">11,500+</span>
+            <span class="project-stat-label">impressions</span>
+          </div>
+          <div class="project-stat">
+            <span class="project-stat-num">organic</span>
+            <span class="project-stat-label">no paid promotion</span>
+          </div>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span>
+          <span class="tech-tag">Core Data</span>
+          <span class="tech-tag">Clean Architecture</span>
+          <span class="tech-tag">MVVM-C</span>
+          <span class="tech-tag">SPM</span>
+        </div>
+        <div class="project-links">
+          <a href="https://apps.apple.com" class="project-link" target="_blank">↗ App Store</a>
+          <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+      <div class="project-screenshots">
+        <div class="Images/Kashta1"><div class="ph">Kashta1</div></div>
+        <div class="Images/Kashta2"><div class="ph">Kashta2</div></div>
+        <div class="Images/Kashta3"><div class="ph">Kashta3</div></div>
+        <div class="Images/Kashta4"><div class="ph">Kashta4</div></div>
+        <div class="Images/Kashta5"><div class="ph">Kashta5</div></div>
+        <div class="Images/Kashta6"><div class="ph">Kashta6</div></div>
+        <div class="Images/Kashta7"><div class="ph">Kashta7</div></div>
+        <div class="Images/Kashta8"><div class="ph">Kashta8</div></div>
+        <div class="Images/Kashta9"><div class="ph">Kashta9</div></div>
+        <div class="Images/Kashta10"><div class="ph">Kashta10</div></div>
+      </div>
+    </div>
+
+    <!-- Let's Go -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">Let's Go — Ride Hailing App</div>
+          <div class="project-badges">
+            <span class="badge badge-blue">Freelance</span>
+            <span class="badge badge-gray">Passenger + Driver</span>
+          </div>
+        </div>
+        <p class="project-desc">Full ride-hailing platform with separate Passenger and Driver iOS apps. Real-time ride tracking, push notifications, Firebase auth, and custom map interfaces. Full ownership from architecture to App Store submission.</p>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span>
+          <span class="tech-tag">Firebase</span>
+          <span class="tech-tag">MapKit</span>
+          <span class="tech-tag">MVVM-C</span>
+          <span class="tech-tag">Clean Architecture</span>
+          <span class="tech-tag">Core Data</span>
+          <span class="tech-tag">Push Notifications</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+      <div class="project-screenshots">
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+      </div>
+    </div>
+
+    <!-- AlRayam -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">AlRayam Medical Center</div>
+          <div class="project-badges">
+            <span class="badge badge-blue">Freelance</span>
+            <span class="badge badge-gray">Client App</span>
+          </div>
+        </div>
+        <p class="project-desc">Patient-facing iOS app for appointment booking, schedule management, and clinic communication. Firebase backend with real-time updates and push notification reminders.</p>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span>
+          <span class="tech-tag">Firebase</span>
+          <span class="tech-tag">Clean Architecture</span>
+          <span class="tech-tag">MVVM-C</span>
+          <span class="tech-tag">Push Notifications</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+      <div class="project-screenshots">
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+      </div>
+    </div>
+
+    <!-- U-Turn -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">U-Turn — Car Marketplace</div>
+          <div class="project-badges">
+            <span class="badge badge-blue">Freelance</span>
+          </div>
+        </div>
+        <p class="project-desc">Dubizzle-like marketplace for buying and selling cars and spare parts. Subscription-based premium listing system, Alamofire networking, and SwiftData local storage.</p>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span>
+          <span class="tech-tag">SwiftData</span>
+          <span class="tech-tag">Alamofire</span>
+          <span class="tech-tag">Clean Architecture</span>
+          <span class="tech-tag">In-App Purchases</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+      <div class="project-screenshots">
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">history</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-dot active"></div>
+      <div class="exp-content">
+        <div class="exp-title">iOS Developer</div>
+        <div class="exp-company">Micro Engineering Egypt (METI)</div>
+        <div class="exp-date">Sep 2025 – Present · Cairo, Egypt · Hybrid</div>
+        <ul class="exp-bullets">
+          <li>Fixed critical bugs and shipped features in a modular iOS app using Clean Architecture (MVVM)</li>
+          <li>Multi-region app supporting CA, AU, NZ, UK, and US with environment configurations</li>
+          <li>CI/CD pipeline with Fastlane and TestFlight, code reviews with international teams</li>
+          <li>Managed project modularization using Tuist</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot active"></div>
+      <div class="exp-content">
+        <div class="exp-title">iOS Developer</div>
+        <div class="exp-company">Khamsat.com — Freelance</div>
+        <div class="exp-date">Mar 2025 – Present · Remote</div>
+        <ul class="exp-bullets">
+          <li>Delivered multiple client iOS apps end-to-end using SwiftUI and Clean Architecture</li>
+          <li>Full ownership: architecture, design system, Firebase integration, App Store submission</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-title">iOS Developer Intern</div>
+        <div class="exp-company">4Sale International Co.</div>
+        <div class="exp-date">Jun 2025 – Aug 2025 · Cairo, Egypt · Hybrid</div>
+        <ul class="exp-bullets">
+          <li>Migrated UIKit modules to SwiftUI, reducing boilerplate significantly</li>
+          <li>Participated in Swift 6 migration and applied Clean Architecture + Dependency Injection</li>
+          <li>Agile environment using Jira and Slack</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-title">iOS Developer Intern</div>
+        <div class="exp-company">Information Technology Institute (ITI)</div>
+        <div class="exp-date">Nov 2024 – Mar 2025 · New Capital, Egypt</div>
+        <ul class="exp-bullets">
+          <li>5-month intensive iOS program — Swift, SwiftUI, UIKit, Objective-C</li>
+          <li>Built production-like projects with REST APIs, GraphQL, Core Data, and Moya</li>
+          <li>Graduation project: Shopify M-Commerce app (SwiftUI + GraphQL + RxSwift)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">reach out</div>
+  <h2 class="section-title">Get in Touch</h2>
+  <div class="contact-card">
+    <div class="contact-title">Let's build something.</div>
+    <p class="contact-desc">Available for freelance iOS projects. Whether it's a new app from scratch or improving an existing one — let's talk.</p>
+    <div class="contact-links">
+      <a href="mailto:youssef.m.elbedwehy@gmail.com" class="btn-primary">↗ Email Me</a>
+      <a href="https://linkedin.com/in/usefelbedwehy" target="_blank" class="btn-outline">LinkedIn</a>
+      <a href="https://github.com/UsefElbedwehy" target="_blank" class="btn-outline">GitHub</a>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>name</label>
+          <input type="text" placeholder="Your name" required/>
+        </div>
+        <div class="form-group">
+          <label>email</label>
+          <input type="email" placeholder="your@email.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>message</label>
+        <textarea placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="align-self:flex-start;">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>Built by Youssef Elbedwehy · iOS Developer · Cairo, Egypt</p>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Sent ✓';
+  btn.style.background = '#34d399';
+  setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; }, 3000);
+}
+</script>
+</body>
+</html>
