@@ -112,7 +112,36 @@
   }
   .section-label::before { content:''; width:24px; height:1px; background: var(--blue); }
   .section-title { font-size:2rem; font-weight:800; margin-bottom:3rem; letter-spacing:-0.02em; }
-
+.screenshots-wrap { position: relative; }
+.screenshots-wrap::after {
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 48px;
+  background: linear-gradient(to right, transparent, var(--bg2));
+  pointer-events: none;
+}
+.project-screenshots {
+  display: flex; gap: 10px;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.project-screenshots::-webkit-scrollbar { display: none; }
+.screenshot-placeholder {
+  flex-shrink: 0;
+  width: 110px;
+  aspect-ratio: 9/19.5;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex; align-items: center; justify-content: center;
+}
+.screenshot-placeholder img { width:100%; height:100%; object-fit:cover; display:block; }
+.screenshot-placeholder .ph { font-family: var(--mono); font-size:10px; color: var(--dim); text-align:center; padding:0.5rem; }
   /* SKILLS */
   .skills-grid { display:flex; flex-direction:column; gap:1.5rem; }
   .skill-row { display:flex; gap:1rem; align-items:flex-start; flex-wrap:wrap; }
@@ -391,42 +420,32 @@
         </div>
         <p class="project-desc">Offline-first shopping and goods app. Built entirely with SwiftUI and Clean Architecture (MVVM-C). All data persisted locally with Core Data — no internet required after install.</p>
         <div class="project-stats">
-          <div class="project-stat">
-            <span class="project-stat-num">2,800+</span>
-            <span class="project-stat-label">downloads</span>
-          </div>
-          <div class="project-stat">
-            <span class="project-stat-num">11,500+</span>
-            <span class="project-stat-label">impressions</span>
-          </div>
-          <div class="project-stat">
-            <span class="project-stat-num">organic</span>
-            <span class="project-stat-label">no paid promotion</span>
-          </div>
+          <div class="project-stat"><span class="project-stat-num">2,800+</span><span class="project-stat-label">downloads</span></div>
+          <div class="project-stat"><span class="project-stat-num">11,500+</span><span class="project-stat-label">impressions</span></div>
+          <div class="project-stat"><span class="project-stat-num">organic</span><span class="project-stat-label">no paid promotion</span></div>
         </div>
         <div class="project-tech">
-          <span class="tech-tag">SwiftUI</span>
-          <span class="tech-tag">Core Data</span>
-          <span class="tech-tag">Clean Architecture</span>
-          <span class="tech-tag">MVVM-C</span>
-          <span class="tech-tag">SPM</span>
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">Core Data</span>
+          <span class="tech-tag">Clean Architecture</span><span class="tech-tag">MVVM-C</span><span class="tech-tag">SPM</span>
         </div>
         <div class="project-links">
           <a href="https://apps.apple.com" class="project-link" target="_blank">↗ App Store</a>
           <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
         </div>
       </div>
-      <div class="project-screenshots">
-        <div class="screenshot-placeholder"><img src="Images/Kashta1.jpg" alt="Kashta screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta2.jpg" alt="Kashta screenshot 2"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta3.jpg" alt="Kashta screenshot 3"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta4.jpg" alt="Kashta screenshot 4"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta5.jpg" alt="Kashta screenshot 5"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta6.jpg" alt="Kashta screenshot 6"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta7.jpg" alt="Kashta screenshot 7"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta8.jpg" alt="Kashta screenshot 8"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta9.jpg" alt="Kashta screenshot 9"/></div>
-        <div class="screenshot-placeholder"><img src="Images/Kashta10.jpg" alt="Kashta screenshot 10"/></div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><img src="Images/Kashta1.jpg" alt="Kashta 1"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta2.jpg" alt="Kashta 2"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta3.jpg" alt="Kashta 3"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta4.jpg" alt="Kashta 4"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta5.jpg" alt="Kashta 5"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta6.jpg" alt="Kashta 6"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta7.jpg" alt="Kashta 7"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta8.jpg" alt="Kashta 8"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta9.jpg" alt="Kashta 9"/></div>
+          <div class="screenshot-placeholder"><img src="Images/Kashta10.jpg" alt="Kashta 10"/></div>
+        </div>
       </div>
     </div>
 
@@ -442,29 +461,27 @@
         </div>
         <p class="project-desc">Full ride-hailing platform with separate Passenger and Driver iOS apps. Real-time ride tracking, push notifications, Firebase auth, and custom map interfaces. Full ownership from architecture to App Store submission.</p>
         <div class="project-tech">
-          <span class="tech-tag">SwiftUI</span>
-          <span class="tech-tag">Firebase</span>
-          <span class="tech-tag">MapKit</span>
-          <span class="tech-tag">MVVM-C</span>
-          <span class="tech-tag">Clean Architecture</span>
-          <span class="tech-tag">Core Data</span>
-          <span class="tech-tag">Push Notifications</span>
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">Firebase</span><span class="tech-tag">MapKit</span>
+          <span class="tech-tag">MVVM-C</span><span class="tech-tag">Clean Architecture</span>
+          <span class="tech-tag">Core Data</span><span class="tech-tag">Push Notifications</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
         </div>
       </div>
-      <div class="project-screenshots">
-        <div class="screenshot-placeholder"><img src="Images/letsgo1.jpg" alt="letsgo screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo2.jpg" alt="letsgo screenshot 2"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo3.jpg" alt="letsgo screenshot 3"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo4.png" alt="letsgo screenshot 4"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo5.jpg" alt="letsgo screenshot 5"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo6.jpg" alt="letsgo screenshot 6"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo7.jpg" alt="letsgo screenshot 7"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo8.jpg" alt="letsgo screenshot 8"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo9.png" alt="letsgo screenshot 9"/></div>
-        <div class="screenshot-placeholder"><img src="Images/letsgo10.jpg" alt="letsgo screenshot 10"/></div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><img src="Images/letsgo1.jpg" alt="Letsgo 1"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo2.jpg" alt="Letsgo 2"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo3.jpg" alt="Letsgo 3"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo4.png" alt="Letsgo 4"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo5.jpg" alt="Letsgo 5"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo6.jpg" alt="Letsgo 6"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo7.jpg" alt="Letsgo 7"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo8.jpg" alt="Letsgo 8"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo9.png" alt="Letsgo 9"/></div>
+          <div class="screenshot-placeholder"><img src="Images/letsgo10.jpg" alt="Letsgo 10"/></div>
+        </div>
       </div>
     </div>
 
@@ -480,27 +497,26 @@
         </div>
         <p class="project-desc">Patient-facing iOS app for appointment booking, schedule management, and clinic communication. Firebase backend with real-time updates and push notification reminders.</p>
         <div class="project-tech">
-          <span class="tech-tag">SwiftUI</span>
-          <span class="tech-tag">Firebase</span>
-          <span class="tech-tag">Clean Architecture</span>
-          <span class="tech-tag">MVVM-C</span>
-          <span class="tech-tag">Push Notifications</span>
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">Firebase</span>
+          <span class="tech-tag">Clean Architecture</span><span class="tech-tag">MVVM-C</span><span class="tech-tag">Push Notifications</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
         </div>
       </div>
-      <div class="project-screenshots">
-        <div class="screenshot-placeholder"><img src="Images/ARC3.png" alt="ARC3 screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC4.png" alt="ARC4 screenshot 2"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC5.png" alt="ARC5 screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC6.png" alt="ARC6 screenshot 2"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC7.png" alt="ARC7 screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC8.png" alt="ARC8 screenshot 2"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC9.png" alt="ARC9 screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC10.png" alt="ARC10 screenshot 2"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC11.png" alt="ARC11 screenshot 1"/></div>
-        <div class="screenshot-placeholder"><img src="Images/ARC12.png" alt="ARC12 screenshot 2"/></div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><img src="Images/ARC3.png" alt="ARC 3"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC4.png" alt="ARC 4"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC5.png" alt="ARC 5"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC6.png" alt="ARC 6"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC7.png" alt="ARC 7"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC8.png" alt="ARC 8"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC9.png" alt="ARC 9"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC10.png" alt="ARC 10"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC11.png" alt="ARC 11"/></div>
+          <div class="screenshot-placeholder"><img src="Images/ARC12.png" alt="ARC 12"/></div>
+        </div>
       </div>
     </div>
 
@@ -515,21 +531,127 @@
         </div>
         <p class="project-desc">Dubizzle-like marketplace for buying and selling cars and spare parts. Subscription-based premium listing system, Alamofire networking, and SwiftData local storage.</p>
         <div class="project-tech">
-          <span class="tech-tag">SwiftUI</span>
-          <span class="tech-tag">SwiftData</span>
-          <span class="tech-tag">Alamofire</span>
-          <span class="tech-tag">Clean Architecture</span>
-          <span class="tech-tag">In-App Purchases</span>
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">SwiftData</span><span class="tech-tag">Alamofire</span>
+          <span class="tech-tag">Clean Architecture</span><span class="tech-tag">In-App Purchases</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
         </div>
       </div>
-      <div class="project-screenshots">
-        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
-        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
-        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
-        <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Online Equestrian -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">Online Equestrian</div>
+          <div class="project-badges">
+            <span class="badge badge-blue">Freelance</span>
+          </div>
+        </div>
+        <p class="project-desc">iOS marketplace for buying and selling horses and equestrian equipment. Users can browse listings, view detailed information, and contact sellers directly through the app.</p>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">REST API</span>
+          <span class="tech-tag">MVVM</span><span class="tech-tag">Image Upload</span>
+        </div>
+      </div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aseer -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">Aseer — Smart Tourism Guide</div>
+          <div class="project-badges">
+            <span class="badge badge-blue">Freelance</span>
+          </div>
+        </div>
+        <p class="project-desc">Smart tourism guide helping users explore destinations, view locations on interactive maps, and get AI-powered recommendations through a built-in assistant.</p>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">MapKit</span>
+          <span class="tech-tag">OpenAI API</span><span class="tech-tag">Moya</span><span class="tech-tag">MVVM</span>
+        </div>
+      </div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shopio -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">Shopio — M-Commerce App</div>
+          <div class="project-badges">
+            <span class="badge badge-gray">Personal</span>
+            <span class="badge badge-gray">ITI Graduation Project</span>
+          </div>
+        </div>
+        <p class="project-desc">Full mobile commerce app built on Shopify. Browse products, manage a favorites list, and complete purchases through an integrated checkout — backed by GraphQL and local SwiftData storage.</p>
+        <div class="project-tech">
+          <span class="tech-tag">SwiftUI</span><span class="tech-tag">GraphQL</span>
+          <span class="tech-tag">Shopify API</span><span class="tech-tag">SwiftData</span><span class="tech-tag">MVVM</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Football App -->
+    <div class="project-card">
+      <div class="project-inner">
+        <div class="project-header">
+          <div class="project-title">Football App</div>
+          <div class="project-badges">
+            <span class="badge badge-gray">Personal</span>
+          </div>
+        </div>
+        <p class="project-desc">Sports app displaying leagues, teams, and match details with rich information. Users can save favorite leagues for offline access via Core Data.</p>
+        <div class="project-tech">
+          <span class="tech-tag">UIKit</span><span class="tech-tag">REST API</span>
+          <span class="tech-tag">Core Data</span><span class="tech-tag">MVC</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/UsefElbedwehy" class="project-link" target="_blank">↗ GitHub</a>
+        </div>
+      </div>
+      <div class="screenshots-wrap">
+        <div class="project-screenshots">
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+          <div class="screenshot-placeholder"><div class="ph">Add screenshot</div></div>
+        </div>
       </div>
     </div>
 
